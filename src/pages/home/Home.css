@@ -1,0 +1,16 @@
+.app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.expanded {
+    height: 100%;
+}
+
+.shows {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 32px 16px;
+}

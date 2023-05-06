@@ -1,0 +1,27 @@
+.app_header {
+    background-color: #191919;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 0 5%;
+}
+
+.app_name {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.header_icons {
+    gap: 32px;
+    display: flex;
+}
+
+.logo {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
