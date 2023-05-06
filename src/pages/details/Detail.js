@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import Header from "../../components/header/Header";
 import { useEffect, useState } from "react";
 import ApiService from "../../services/api_service";
 import './Detail.css';
 import { FaStar } from "react-icons/fa";
 import LocalStorageService from "../../services/local_storage";
+import { useParams } from "react-router-dom";
 
 function Detail() {
     const [show, setShow] = useState(null);
@@ -12,17 +13,17 @@ function Detail() {
     const [isBooked, setIsBooked] = useState(false);
 
     const { id } = useParams();
-        
-    const initData = async () => {
-        const s = await ApiService.show(id);
-        setShow(s)
-        setIsBooked(await LocalStorageService.checkIfBooked(id))
-    }
-
+    
     useEffect(() => {
-        initData();
-    }, []);
-
+        initData(id)
+        window.scrollTo(0,0)
+    }, [id]);
+    
+    const initData = async (showId) => {
+        const s = await ApiService.show(showId);
+        setShow(s)
+        setIsBooked(await LocalStorageService.checkIfBooked(showId))
+    }
     const bookShow = async () => {
         if (isBooking) {
             setIsBooked(true);
