@@ -7,16 +7,21 @@ import { FaStar } from "react-icons/fa";
 import LocalStorageService from "../../services/local_storage";
 
 function Detail() {
-    const { id } = useParams();
     const [show, setShow] = useState(null);
     const [isBooking, setIsBooking] = useState(false);
     const [isBooked, setIsBooked] = useState(false);
 
-    const init = async () => {
+    const { id } = useParams();
+        
+    const initData = async () => {
         const s = await ApiService.show(id);
         setShow(s)
         setIsBooked(await LocalStorageService.checkIfBooked(id))
     }
+
+    useEffect(() => {
+        initData();
+    }, []);
 
     const bookShow = async () => {
         if (isBooking) {
@@ -31,9 +36,6 @@ function Detail() {
         await LocalStorageService.removeTicketBooking(id);
     }
 
-    useEffect(() => {
-        init();
-    }, []);
 
     return (
         <div className="app">
@@ -42,12 +44,12 @@ function Detail() {
                 show == null ? null : (
                     <div className="movie">
                         <div className="movie__intro">
-                            <img className="movie__backdrop" src={show.image.original} />
+                            <img className="movie__backdrop" src={show.image.original} alt={ show.name }/>
                         </div>
                         <div className="movie__detail">
                             <div className="movie__detailLeft">
                                 <div className="movie__posterBox">
-                                    <img className="movie__poster" src={show.image.medium} />
+                                    <img className="movie__poster" src={show.image.medium} alt={ show.name }/>
                                 </div>
                             </div>
                             <div className="movie__detailRight">
@@ -57,7 +59,7 @@ function Detail() {
                                     <div className="movie__rating">
                                         {show.rating.average ?? "N/A"} <FaStar />
                                     </div>
-                                    <div className="movie__runtime">{show.averageRuntime ?? "N/A" + " mins"}</div>
+                                    <div className="movie__runtime">{(show.averageRuntime ?? "N/A") + " mins"}</div>
                                     <div className="movie__releaseDate">{show.premiered ?? "N/A"}</div>
                                 </div>
                                 {
